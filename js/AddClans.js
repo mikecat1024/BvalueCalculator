@@ -31,6 +31,13 @@ function WeekMatch(w, firstnum, secondnum){
     return ret;
 }
 
+function WeekMatchSample(w, firstnum, secondnum){
+    ret = "<li class=\"match\"><div>" + clanname[firstnum] + "</div>";
+    ret += "<div>draw</div>";
+    ret += "<div>" + clanname[secondnum] + "</div></li>";
+    return ret;
+}
+
 function ClanName(){
     var schedule = document.getElementById('schedule');
     var inner = ""
@@ -55,7 +62,7 @@ function ClanName(){
         inner = ""
     }
     var input = document.createElement('div');
-    inner = "<input type=\"button\" value=\"決定\" onclick=\"Calc()\"></input>"
+    inner = "<input id = \"ok\" type=\"button\" value=\"OK\" onclick=\"Calc()\"></input>"
     input.innerHTML = inner;
     var parent = document.getElementById('wins');
     parent.appendChild(input);
@@ -64,7 +71,7 @@ function ClanName(){
 
 var win = []
 
-for(var i = 0; i < FormCount-1; i++){
+for(var i = 0; i < 100; i++){
     var tmp = []
     win.push(tmp);
 }
@@ -74,25 +81,69 @@ function Win(e){
     var target = e.target || e.srcElement;
     target.classList.toggle('green');
     week = target.id.split('Clan')[0].split('Week')[1];
+    if(!target.classList.contains('green') && target.id.split('Draw').length == 1){
+        var new_win = []
+        for(var i = 0; i < win[week].length; i++){
+            if(win[week][i] != target.id.split('Clan')[1]){
+                new_win.push(win[week][i]);
+            }
+        }
+        win[week] = new_win;
+        return;
+    }
     if(target.id.split('Clan').length == 2){
-        win[week].push(target.id.split('Clan')[1]);
+        var tmp = target.id.split('Clan')[1];
+        win[week].push(String(tmp));
     }
 }
 
 function Calc() {
-    var before_values = [], after_values = [];
-    for(var i = 0; i < FormCount; i++){
-        before_values.push(1);
-        after_values.push(1);
+    var values = [];
+    values.push([]);
+    values.push([]);
+    for(var i = 0; i < FormCount+1; i++){
+        values[0].push(1);
+        values[1].push(1);
     }
     for(var i = 1; i < FormCount; i++){
-        var until = win[i].length;
-        console.log(until);
-        for(var j = 0; j < until; j++){
-            winner = win[i][j].split('-');
-            loser = win[i][j].split('-');
-            console.log(winner);
+        for(var j = 0; j < win[i].length; j++){
+            winner = win[i][j].split('-')[0];
+            loser = win[i][j].split('-')[1];
+            winner_value = values[0][winner];
+            loser_value = values[0][loser];
+            values[0][winner] = winner_value + (loser_value/(2*(FormCount-1)));
+            values[0][loser] = loser_value - (1/(winner_value*(2*(FormCount-1))));
         }
     }
+    for(var i = FormCount-1; i > 0; i--){
+        for(var j = 0; j < win[i].length; j++){
+            winner = win[i][j].split('-')[0];
+            loser = win[i][j].split('-')[1];
+            winner_value = values[1][winner];
+            loser_value = values[1][loser];
+            values[1][winner] = winner_value + (loser_value/(2*(FormCount-1)));
+            values[1][loser] = loser_value - (1/(winner_value*(2*(FormCount-1))));
+        }
+    }
+    var Bvalues = [];
+    for(var i = 0; i < FormCount; i++){
+        Bvalues.push((values[0][i] + values[1][i])/2);
+    }
+    var inner = "<ul>";
+    for(var i = 0; i < FormCount; i++){
+        inner += "<li><p>" + clanname[i] +"'s B-value is " + Bvalues[i] +"</p></li>"
+    }
+    inner += "</ul>"
+    var result = document.getElementById('result');
+    var input = document.createElement('div');
+    input.innerHTML = inner;
+    result.appendChild(input);
+    document.getElementById('ok').remove();
 }
 
+function WeekMatch(w, firstnum, secondnum){
+    ret = "<li class=\"match\"><div id=\"Week" + w + "Clan"+ firstnum + "-" + secondnum + "\" onclick=\"Win()\">" + clanname[firstnum] + "</div>";
+    ret += "<div id = \"Week" + w + "Draw" + firstnum + "-"+ secondnum + "\" onclick=\"Win()\">draw</div>";
+    ret += "<div id=\"Week" + w + "Clan"+ secondnum + "-" + firstnum + "\" onclick=\"Win()\">" + clanname[secondnum] + "</div></li>";
+    return ret;
+}
