@@ -13,16 +13,18 @@ body {
     width: 300px;
     line-height: 48px;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 #button_area {
     display: flex;
 }
 #button_area input {
-    width: 48px;
-    height: 32px;
-    margin-right: 16px;
+    width: 50px;
+    height: 30px;
+    margin-right: 25px;
     margin-top: 16px;
+    border-radius: 5px;
 }
 
 #schedule {
@@ -43,9 +45,10 @@ body {
 }
 
 #OK {
-    width: 48px;
-    height: 32px;
+    width: 50px;
+    height: 30px;
     margin-top: 16px;
+    border-radius: 5px;
 }
 
 .week li div{
@@ -53,7 +56,8 @@ body {
     width: 97px;
     border: solid 1px black;
     margin-left: 1px;
-    margin-bottom: 3px;
+    margin-bottom: 1px;
+    border-radius: 5px;
 }
 
 .green {
