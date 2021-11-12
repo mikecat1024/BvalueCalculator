@@ -10,17 +10,19 @@ body {
 
 
 #form_area input {
-    line-height: 32px;
-    margin-bottom: 10px;
+    width: 300px;
+    line-height: 48px;
+    margin-top: 10px;
 }
 
 #button_area {
     display: flex;
 }
 #button_area input {
-    width: 32px;
+    width: 48px;
     height: 32px;
     margin-right: 16px;
+    margin-top: 16px;
 }
 
 #schedule {
@@ -32,8 +34,18 @@ body {
 .week {
     margin-right: 10px;
     width: 300px;
-    height: 200px;
     text-align: center;
+    margin-top: 16px;
+}
+
+.hidden{
+    display: none;
+}
+
+#OK {
+    width: 48px;
+    height: 32px;
+    margin-top: 16px;
 }
 
 .week li div{
@@ -46,4 +58,13 @@ body {
 
 .green {
     background-color: greenyellow;
+}
+.gray {
+    background-color: gray;
+    color: white;
+}
+
+#result {
+    margin-top: 32px;
+    font-size: 24px;
 }

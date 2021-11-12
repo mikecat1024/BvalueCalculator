@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>B-value Calculator</title>
     <script src="js/AddClans.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -30,15 +30,17 @@
             <input type="button" value="-" onclick="DeleteForm()">
         </li>
         <li>
-            <input type="button" value="OK" onclick="ClanName()">
+            <input type="button" value="Sample" onclick="Sample()">
+        </li>
+        <li>
+            <input type="button" value="Set" onclick="Schedule()">
         </li>
     </ul>
     <div id="wins" >
         <ul id="schedule">
-        </ul> 
+        </ul>
+        <input id = "OK" class="hidden" type="button" value="Calc" onclick="Calc()"></input>
     </div>
-    <div id="result">
-
-    </div>
+    <div id="result"></div>
 </body>
 </html>

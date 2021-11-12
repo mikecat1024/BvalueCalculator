@@ -22,12 +22,33 @@ function DeleteForm(){
 
 function WeekMatch(w, firstnum, secondnum){
     ret = "<li class=\"match\"><div id=\"Week" + w + "Clan"+ firstnum + "-" + secondnum + "\" onclick=\"Win()\">" + clanname[firstnum] + "</div>";
-    ret += "<div id = \"Week" + w + "Draw" + firstnum + "-"+ secondnum + "\" onclick=\"Win()\">draw</div>";
+    ret += "<div id = \"Week" + w + "Draw" + firstnum + "-"+ secondnum + "\" onclick=\"Draw()\">draw</div>";
     ret += "<div id=\"Week" + w + "Clan"+ secondnum + "-" + firstnum + "\" onclick=\"Win()\">" + clanname[secondnum] + "</div></li>";
     return ret;
 }
+function WeekMatchSample(w, firstnum, secondnum){
+    ret = "<li class=\"match\"><div id=\"Week" + w + "Clan"+ firstnum + "-" + secondnum + "\">" + clanname[firstnum] + "</div>";
+    ret += "<div id = \"Week" + w + "Draw" + firstnum + "-"+ secondnum + "\">draw</div>";
+    ret += "<div id=\"Week" + w + "Clan"+ secondnum + "-" + firstnum + "\">" + clanname[secondnum] + "</div></li>";
+    return ret;
+}
+function Schedule(){
+    var schedule = document.getElementById('schedule');
+    var clone = schedule.cloneNode( false );
+    schedule.parentNode.replaceChild( clone , schedule );
+    GetSchedule(WeekMatch);
+    document.getElementById('button_area').remove();
+    document.getElementById('OK').classList.remove('hidden')
+}
 
-function ClanName(){ // 我ながらこの書き方はどうかと思おう（が、とりあえず使えるようにしたいので放置）
+function Sample(){
+    var schedule = document.getElementById('schedule');
+    var clone = schedule.cloneNode( false );
+    schedule.parentNode.replaceChild( clone , schedule );
+    GetSchedule(WeekMatchSample);
+}
+
+function GetSchedule(WM){ // 我ながらこの書き方はどうかと思う（が、とりあえず使えるようにしたいので放置）
     var schedule = document.getElementById('schedule');
     var inner = ""
     for(let i = 0; i < FormCount; i++){
@@ -37,13 +58,13 @@ function ClanName(){ // 我ながらこの書き方はどうかと思おう（�
     if(FormCount%2 == 0){
         for(let i = 1; i < FormCount; i++){
             inner += "<li><ul class=\"week\"><p>week" + i + "<p>";
-            inner += WeekMatch(i, 0, i);
+            inner += WM(i, 0, i);
             var firstclan = i+1, secondclan = FormCount+i-2;
             if(secondclan >= FormCount) secondclan = secondclan%FormCount+1; 
             for(var j = 0; j < FormCount/2-1; j++, firstclan++, secondclan--){
                 if(firstclan == FormCount) firstclan = 1;
                 if(secondclan == 0) secondclan = FormCount-1;
-                inner += WeekMatch(i, firstclan, secondclan);
+                inner += WM(i, firstclan, secondclan);
             }
             inner += "</ul></li>";
             var input = document.createElement('li');
@@ -55,8 +76,7 @@ function ClanName(){ // 我ながらこの書き方はどうかと思おう（�
         for(var week = 1; week <= FormCount; week++){
             inner += "<li><ul class=\"week\"><p>week" + week + "<p>";
             for(var i = 0; i < (FormCount-1)/2; i++){
-                inner += WeekMatch(week, (i+week-1)%FormCount, (2*FormCount-i-2+week)%FormCount);
-                console.log((2*FormCount-i-2+week)%FormCount);
+                inner += WM(week, (i+week-1)%FormCount, (2*FormCount-i-2+week)%FormCount);
             }
             inner += "</ul></li>";
             var input = document.createElement('li');
@@ -65,13 +85,6 @@ function ClanName(){ // 我ながらこの書き方はどうかと思おう（�
             inner = ""
         }
     }
-
-    var input = document.createElement('div');
-    inner = "<input id = \"ok\" type=\"button\" value=\"OK\" onclick=\"Calc()\"></input>"
-    input.innerHTML = inner;
-    var parent = document.getElementById('wins');
-    parent.appendChild(input);
-    document.getElementById('button_area').remove();
 }
 
 var win = []
@@ -81,28 +94,59 @@ for(var i = 0; i < 100; i++){
     win.push(tmp);
 }
 
+function reverse(s){
+    return s.split("").reverse().join("");
+}
+
 function Win(e){
     var e = e || window.event;
     var target = e.target || e.srcElement;
-    target.classList.toggle('green');
     week = target.id.split('Clan')[0].split('Week')[1];
-    if(!target.classList.contains('green') && target.id.split('Draw').length == 1){
-        var new_win = []
-        for(var i = 0; i < win[week].length; i++){
-            if(win[week][i] != target.id.split('Clan')[1]){
-                new_win.push(win[week][i]);
+
+    if(target.id.split('Clan').length == 2){
+        var rev = reverse(target.id.split('Clan')[1]);
+        for (var i = 0; i < win[week].length; i++){
+            if(rev == win[week][i]){
+                alert("invalid action!");
+                return;
             }
         }
-        win[week] = new_win;
-        return;
     }
-    if(target.id.split('Clan').length == 2){
-        var tmp = target.id.split('Clan')[1];
-        win[week].push(String(tmp));
+
+    var new_win = []
+    var is_contained = false;
+    for(var i = 0; i < win[week].length; i++){
+        if(win[week][i] != target.id.split('Clan')[1]){
+            new_win.push(win[week][i]);
+        } else {
+            is_contained = true;
+        }
+    }
+    win[week] = new_win;
+
+    target.classList.toggle('green')
+
+    if(!is_contained){
+        win[week].push(target.id.split('Clan')[1]);
     }
 }
 
-function Calc() {
+function Draw(e){
+    var e = e || window.event;
+    var target = e.target || e.srcElement;
+    target.classList.toggle('gray');
+}
+
+function Calc(){
+    var result = document.getElementById('result');
+    var clone = result.cloneNode( false );
+    result.parentNode.replaceChild( clone , result );
+    Calculate();
+}
+
+function Calculate() {
+    var result = document.getElementById('result');
+
     var values = [];
     values.push([]);
     values.push([]);
@@ -139,9 +183,7 @@ function Calc() {
         inner += "<li><p>" + clanname[i] +"'s B-value is " + Bvalues[i] +"</p></li>"
     }
     inner += "</ul>"
-    var result = document.getElementById('result');
     var input = document.createElement('div');
     input.innerHTML = inner;
     result.appendChild(input);
-    document.getElementById('ok').remove();
 }
