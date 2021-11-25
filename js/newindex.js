@@ -36,6 +36,10 @@ function week_HTML(week){
     return HTML
 }
 
+function set_button(){
+    document.getElementById("calc-button-area").classList.remove("hidden")
+}
+
 function reset_schedule(){
     var schedule = document.getElementById("schedule-area")
     var empty = schedule.cloneNode(false)
@@ -43,6 +47,7 @@ function reset_schedule(){
 }
 
 function set_schedule(){
+    set_button()
     reset_schedule()
     week_number = clan_number-!(clan_number%2)
     match_number = Math.floor(clan_number/2)

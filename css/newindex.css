@@ -5,3 +5,7 @@ ul {
 li {
     float: left;
 }
+
+.hidden {
+    display: none;
+}
