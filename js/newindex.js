@@ -14,11 +14,9 @@ function subtract_clan(){
 
 function match_HTML(week, match){
     var HTML = "<li class=\"match\">"
-        HTML += "<div id=\"week" + week + "match" + match + "-winner\">"
-        HTML += "</div>"
+        HTML += "<div id=\"week" + week + "match" + match + "-winner\"\></div>"
         HTML += "<div>defeat</div>"
-        HTML += "<div id=\"week" + week + "match" + match + "-loser\">"
-        HTML += "</div>"
+        HTML += "<div id=\"week" + week + "match" + match + "-loser\"></div>"
     HTML += "</li>"
     return HTML
 }
