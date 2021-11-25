@@ -12,11 +12,16 @@ function subtract_clan(){
     document.getElementById("clan-number").textContent = clan_number
 }
 
+function input_HTML(week, match){
+    var HTML = "<input type=\"text\" id=\"week" + week + "match" + match + "-winner\">"
+    return HTML
+}
+
 function match_HTML(week, match){
     var HTML = "<li class=\"match\">"
-        HTML += "<div id=\"week" + week + "match" + match + "-winner\"\></div>"
+        HTML += "<div>" + input_HTML(week, match) + "</div>"
         HTML += "<div>defeat</div>"
-        HTML += "<div id=\"week" + week + "match" + match + "-loser\"></div>"
+        HTML += "<div>" + input_HTML(week. match) + "</div>"
     HTML += "</li>"
     return HTML
 }
