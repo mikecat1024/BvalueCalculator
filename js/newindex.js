@@ -59,25 +59,55 @@ function set_schedule(){
     document.getElementById("schedule").appendChild(HTML);
 }
 
-function check_name(){
-    var clan_name = {}
+function get_name_map(){
+    var map = {}
     for(var week = 1; week <= week_number; week++){
         for(var match = 0; match < match_number; match++){
-            console.log(match)
             var winner_id = "week" + week + "match" + match + "-winner"
             var loser_id = "week" + week + "match" + match + "-loser"
             var winner = document.getElementById(winner_id)
             var loser = document.getElementById(loser_id)
-            clan_name[winner.value] = true
-            clan_name[loser.value] = true
+            map[winner.value] = 1
+            map[loser.value] = 1
         }
     }
+    return map
+}
+
+function check_name(){
+    var clan_name = get_name_map()
     if(Object.keys(clan_name).length != clan_number){
         alert("the numbers of clan is not equal to the number of names of clan")
+        return false
+    } else {
+        return true
     }
 }
 
+function ties(id){
+    var match = document.getElementById(id)
+    if("ties" in match.classList) return true
+    else return false
+}
+
 function calc_value(){
-    check_name()
+    if(!check_name()) return 0
+    var values = get_name_map()
+    for(var week = 1; week <= week_number; week++){
+        for(var match = 0; match < match_number; match++){
+            if(ties("week" + week + "match" + match)){
+                continue
+            }
+            var winner_id = "week" + week + "match" + match + "-winner"
+            var loser_id = "week" + week + "match" + match + "-loser"
+            var winner = document.getElementById(winner_id)
+            var loser = document.getElementById(loser_id)
+            var winner_value = values[winner.value]
+            var loser_value = values[loser.value]
+
+            values[winner.value] = winner_value + (loser_value/(2*week_number))
+            values[loser.value] = loser_value - (1/(winner_value*2*week_number))
+        }
+    }
 }
 
