@@ -9,3 +9,11 @@ li {
 .hidden {
     display: none;
 }
+
+.tie {
+    background-color: lightgrey;
+}
+
+.defeat {
+    background-color: aquamarine;
+}

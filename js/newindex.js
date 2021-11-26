@@ -20,7 +20,7 @@ function input_HTML(week, match, str){
 function match_HTML(week, match){
     var HTML = "<li class=\"match\">"
         HTML += "<div>" + input_HTML(week, match, "-winner") + "</div>"
-        HTML += "<div>defeat</div>"
+        HTML += "<div id=\"week" + week + "match" + match + "\" class=\"defeat\" onclick=\"change_tie_defeat()\">defeats</div>"
         HTML += "<div>" + input_HTML(week, match, "-loser") + "</div>"
     HTML += "</li>"
     return HTML
@@ -111,3 +111,16 @@ function calc_value(){
     }
 }
 
+function change_tie_defeat(){
+    var e = e || window.event
+    var target = e.target || e.srcElement;
+
+    if('defeat' == target.classList[0]){
+        target.textContent = "ties"
+    } else {
+        target.textContent = "defeats"
+    }
+
+    target.classList.toggle('tie')
+    target.classList.toggle('defeat')
+}
