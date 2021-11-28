@@ -1,19 +1,108 @@
 ul {
     list-style: none;
 }
-
-li {
-    float: left;
-}
-
 .hidden {
     display: none;
 }
 
-.tie {
-    background-color: lightgrey;
+#clan-number-area p {
+    font-size: 24px;
+    margin: 0 16px;
+}
+
+#clan-number-area span {
+    font-size: 32px;
+    margin: 8px;
+}
+#set-button-area {
+    display: flex;
+}
+#set-button-area li input{
+    height: 32px;
+    width: 64px;
+    margin-right: 16px;
+}
+
+#schedule ul{
+    margin: 0;
+    padding: 0;
+}
+
+#schedule #weeks {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#schedule #weeks .week {
+    margin: 16px;
+}
+
+#schedule #weeks .week .match {
+    margin: 8px 0;
+}
+
+#schedule #weeks .week .match li {
+    text-align: center;
+    line-height: 32px;
+}
+
+input {
+    height: 64px;
+    width: inherit;
+}
+
+#calc-button-area input {
+    height: 32px;
+    width: 64px;
+}
+
+#schedule #weeks p {
+    text-align: center;
+    margin: 0;
+}
+
+#schedule .match ul{
+    display: flex;
+
+}
+#schedule .match ul li {
+    width: 100px;
+}
+
+#result {
+    margin: 32px 16px;
+}
+
+#result p {
+    margin: 10px 0;
+}
+
+#result-title {
+    font-size: 24px;
+}
+
+#title {
+    font-size: 32px;
+}
+#detail p {
+    margin: 0 16px;
+}
+
+#schedule {
+    width: 100%;
+    overflow-wrap: keep-all;
 }
 
 .defeat {
-    background-color: aquamarine;
+    margin: 16px 2px;
+    color: white;
+    background-color: #5cb85c;
+    border-radius: 10px;
+}
+
+.tie {
+    margin: 16px 2px;
+    color: white;
+    background-color: #888;
+    border-radius: 10px;
 }
