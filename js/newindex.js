@@ -84,31 +84,58 @@ function check_name(){
     }
 }
 
-function ties(id){
+function is_ties(id){
     var match = document.getElementById(id)
-    if("ties" in match.classList) return true
+    if("tie" == match.classList[0]) return true
     else return false
 }
 
+function set_result(start_values, end_values){
+    HTML  = document.createElement('div')
+    for(var i = 0; i < clan_number; i++){
+        clan =  Object.keys(start_values)[i]
+        HTML.innerHTML += "<p>" + clan + " : " + (start_values[clan] + end_values[clan])/2 + "</p>"
+    }
+    document.getElementById('result-area').appendChild(HTML)
+}
+
 function calc_value(){
-    if(!check_name()) return 0
-    var values = get_name_map()
+    // if(!check_name()) return 0
+    var start_values = get_name_map()
+    var end_values = get_name_map()
     for(var week = 1; week <= week_number; week++){
         for(var match = 0; match < match_number; match++){
-            if(ties("week" + week + "match" + match)){
+            if(is_ties("week" + week + "match" + match)){
                 continue
             }
             var winner_id = "week" + week + "match" + match + "-winner"
             var loser_id = "week" + week + "match" + match + "-loser"
             var winner = document.getElementById(winner_id)
             var loser = document.getElementById(loser_id)
-            var winner_value = values[winner.value]
-            var loser_value = values[loser.value]
+            var winner_value = start_values[winner.value]
+            var loser_value = start_values[loser.value]
 
-            values[winner.value] = winner_value + (loser_value/(2*week_number))
-            values[loser.value] = loser_value - (1/(winner_value*2*week_number))
+            start_values[winner.value] = winner_value + (loser_value/(2*week_number))
+            start_values[loser.value] = loser_value - (1/(winner_value*2*week_number))
         }
     }
+    for(var week = week_number; week >= 1; week--){
+        for(var match = 0; match < match_number; match++){
+            if(is_ties("week" + week + "match" + match)){
+                continue
+            }
+            var winner_id = "week" + week + "match" + match + "-winner"
+            var loser_id = "week" + week + "match" + match + "-loser"
+            var winner = document.getElementById(winner_id)
+            var loser = document.getElementById(loser_id)
+            var winner_value = end_values[winner.value]
+            var loser_value = end_values[loser.value]
+
+            end_values[winner.value] = winner_value + (loser_value/(2*week_number))
+            end_values[loser.value] = loser_value - (1/(winner_value*2*week_number))
+        }
+    }
+    set_result(start_values, end_values)
 }
 
 function change_tie_defeat(){
