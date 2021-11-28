@@ -4,55 +4,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B-value Calculator</title>
-    <script src="js/AddClans.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/newindex.css">
 </head>
-<body>
-    <div id="title">B-value Calculator</div>
-    <br>
-    <div>
-        <p>これはCWLのB-value計算機です。</p>
-        <p>現在、"free win" には対応していません。</p>
-        <p>問題点や追加してほしい機能などがありましたら、LS Vainqueurクランまでご連絡ください。</p>
-        <br>
-        <p>This is B-value Calculator for CWL league.</p>
-        <p>Currently, "free win" is not supported.</p>
-        <p>If there are any problems or features to be added, contact our clan, "LS Vainqueur".</p>
-        <br>
-    </div>
-    <ul id="form_area">
-        <li>
-            <input type="text" id="inputform0" value="Clan0">
-        </li>
-        <li>
-            <input type="text" id="inputform1" value="Clan1">
-        </li>
-        <li>
-            <input type="text" id="inputform2" value="Clan2">
-        </li>
-        <li>
-            <input type="text" id="inputform3" value="Clan3">
-        </li>
-    </ul>
-    <ul id="button_area">
-        <li>
-            <input type="button" value="+" onclick="AddForm()">
-        </li>
-        <li>
-            <input type="button" value="-" onclick="DeleteForm()">
-        </li>
-        <li>
-            <input type="button" value="Sample" onclick="Sample()">
-        </li>
-        <li>
-            <input type="button" value="Set" onclick="Schedule()">
-        </li>
-    </ul>
-    <div id="wins" >
-        <ul id="schedule">
-        </ul>
-        <input id = "OK" class="hidden" type="button" value="Calc" onclick="Calc()"></input>
-    </div>
-    <div id="result"></div>
-</body>
+    <body>
+        <p id="title">B-value Calculator</p>
+        <div id="detail">
+            <p>This is B-value Calculator for CWL.</p>
+            <p>Currently, "free win" is not supported.</p>
+            <p>If there are any problems or features to be added, contact our clan, "LS Vainqueur".</p>
+            <br>
+        </div>
+        <div id="clan-number-area">
+            <p>The number of clans in the league is <span id="clan-number"></span>.</p>
+            <ul id="set-button-area">
+                <li>
+                    <input type="button" value="+" onclick="add_clan()">
+                </li>
+                <li>
+                    <input type="button" value="-" onclick="subtract_clan()">
+                </li>
+                <li>
+                    <input type="button" value="OK" onclick="set_schedule()">
+                </li>
+            </ul>
+        </div>
+        <div id="schedule-area">
+            <div id="schedule">
+                
+            </div>
+            <ul id="calc-button-area" class="hidden">
+                <li>
+                    <input type="button" value="OK" onclick="calc_value()">
+                </li>
+            </ul>
+        </div>
+        <div id="result-area">
+            
+        </div>
+    </body>
+    <script src="js/newindex.js"></script>
 </html>
