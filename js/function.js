@@ -138,7 +138,7 @@ function set_result(start_values, end_values){
     HTML.innerHTML += "<p id=\"result-title\">B-value</p>"
     for(var i = 0; i < clan_number; i++){
         clan =  Object.keys(start_values)[i]
-        HTML.innerHTML += "<p>" + clan + " : " + (start_values[clan] + end_values[clan])/2 + "</p>"
+        HTML.innerHTML += "<p class=\"result-detail\">" + clan + " : " + (start_values[clan] + end_values[clan])/2 + "</p>"
     }
     document.getElementById('result-area').appendChild(HTML)
 }
