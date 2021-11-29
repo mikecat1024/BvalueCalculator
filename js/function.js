@@ -125,9 +125,15 @@ function validate(){
     }
 }
 
-function is_ties(id){
+function is_tie(id){
     var match = document.getElementById(id)
     if("tie" == match.classList[0]) return true
+    else return false
+}
+
+function is_bye(id){
+    var match = document.getElementById(id)
+    if("freewin" == match.classList[0]) return true
     else return false
 }
 
@@ -149,7 +155,7 @@ function calc_value(){
     var end_values = get_name_map()
     for(var week = 1; week <= week_number; week++){
         for(var match = 0; match < match_number; match++){
-            if(is_ties("week" + week + "match" + match)){
+            if(is_tie("week" + week + "match" + match)){
                 continue
             }
             var winner_id = "week" + week + "match" + match + "-winner"
@@ -159,13 +165,14 @@ function calc_value(){
             var winner_value = start_values[winner.value]
             var loser_value = start_values[loser.value]
 
+            
             start_values[winner.value] = winner_value + (loser_value/(2*week_number))
             start_values[loser.value] = loser_value - (1/(winner_value*2*week_number))
         }
     }
     for(var week = week_number; week >= 1; week--){
         for(var match = 0; match < match_number; match++){
-            if(is_ties("week" + week + "match" + match)){
+            if(is_tie("week" + week + "match" + match)){
                 continue
             }
             var winner_id = "week" + week + "match" + match + "-winner"
@@ -186,12 +193,15 @@ function change_tie_defeat(){
     var e = e || window.event
     var target = e.target || e.srcElement;
 
-    if('defeat' == target.classList[0]){
-        target.textContent = "ties"
-    } else {
-        target.textContent = "defeats"
+    var type = ['defeat', 'tie']
+    for(var i = 0; i < type.length; i++){
+        if(type[i] == target.classList[0]){
+            target.classList.toggle(type[i])
+            target.classList.toggle(type[(i+1)%type.length])
+            target.textContent = type[(i+1)%type.length] + 's'
+            break
+        }
     }
-
-    target.classList.toggle('tie')
-    target.classList.toggle('defeat')
 }
+
+set_schedule()
