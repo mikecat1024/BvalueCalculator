@@ -1,3 +1,10 @@
+body {
+    width: 91%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 ul {
     list-style: none;
 }
